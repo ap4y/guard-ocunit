@@ -75,4 +75,6 @@ end
 
 ## Credits
 
-* [guard-rspec](https://github.com/guard/guard-rspec) by [Thibaud Guillaume-Gentil](https://github.com/thibaudgg) for implementation example
+* [guard-rspec](https://github.com/guard/guard-rspec) by [Thibaud Guillaume-Gentil](https://github.com/thibaudgg)
+* [https://github.com/ap4y/guard-ocunit](https://github.com/ap4y/guard-ocunit) by
+[Eloy Durán](https://github.com/alloy)
