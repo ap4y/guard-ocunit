@@ -1,4 +1,4 @@
-# Guard::OCUnit
+# Guard::OCUnit [![Build Status](https://secure.travis-ci.org/ap4y/guard-ocunit.png?branch=master)](http://travis-ci.org/ap4y/guard-ocunit)
 
 OCUnit guard allows to automatically launch tests when files are modified.
 
