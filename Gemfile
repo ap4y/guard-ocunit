@@ -2,6 +2,8 @@ source :rubygems
 
 gemspec
 
+gem 'rake'
+
 # The development group will no be
 # installed on Travis CI.
 #
