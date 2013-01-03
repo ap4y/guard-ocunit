@@ -23,7 +23,7 @@ describe Guard::OCUnit::Runner do
           "-sdk iphonesimulator6.0 " +
           "-configuration Debug -alltargets build " +
           "CONFIGURATION_BUILD_DIR=#{@build_path}",
-          kind_of(XcodeBuild::OutputTranslator)
+          anything()
         ).and_return(-1)
 
         subject.xcodebuild()
@@ -126,7 +126,7 @@ describe Guard::OCUnit::Runner do
                 "-sdk iphonesimulator6.0 " +
                 "-configuration Debug -alltargets build " +
                 "CONFIGURATION_BUILD_DIR=/tmp/sample/build/",
-                kind_of(XcodeBuild::OutputTranslator)
+                anything()
               ).and_return(-1)
 
               subject.run(['test'])
@@ -154,7 +154,7 @@ describe Guard::OCUnit::Runner do
                 "-sdk iphonesimulator6.0 " +
                 "-configuration Debug build " +
                 "CONFIGURATION_BUILD_DIR=#{@build_path}",
-                kind_of(XcodeBuild::OutputTranslator)
+                anything()
               ).and_return(-1)
 
               subject.run(['test'])
@@ -172,7 +172,7 @@ describe Guard::OCUnit::Runner do
                 "-sdk iphonesimulator6.0 " +
                 "-configuration Debug -alltargets build " +
                 "CONFIGURATION_BUILD_DIR=~/Documents/build/",
-                kind_of(XcodeBuild::OutputTranslator)
+                anything()
               ).and_return(-1)
 
               subject.run(['test'])
@@ -199,7 +199,7 @@ describe Guard::OCUnit::Runner do
                 "-sdk iphonesimulator5.0 " +
                 "-configuration Debug -alltargets build " +
                 "CONFIGURATION_BUILD_DIR=#{@build_path}",
-                kind_of(XcodeBuild::OutputTranslator)
+                anything()
               ).and_return(-1)
 
               subject.run(['test'])
