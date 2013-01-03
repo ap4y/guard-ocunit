@@ -32,13 +32,13 @@ class Guard::OCUnit::Formatter < Array
     self
   end
 
-  def dump_summary
+  def dump_summary(with_notification=true)
     end_time = Time.now
     duration = end_time - @start_time
     message = guard_message(@passed + @failed, @failed, 0, duration)
     image   = guard_image(@failed, 0)
     Guard::UI.info(message.gsub("\n", ' '), :reset => true)
-    notify(message, image)
+    notify(message, image) if with_notification
   end
 
   def guard_message(example_count, failure_count, pending_count, duration)

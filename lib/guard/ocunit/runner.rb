@@ -97,7 +97,7 @@ module Guard
         command << otest_command(test_suites, options[:test_bundle])
 
         status = Open4.spawn(command, :stderr => stderr, :status => true)
-        stderr.dump_summary if options[:notification]
+        stderr.dump_summary(options[:notification])
         status.exitstatus
       end
 
