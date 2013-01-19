@@ -26,6 +26,7 @@ module Guard
           :notification     => true,
           :clean            => false,
           :build_variables  => nil,
+          :test_variables   => nil
         }.merge(options)
       end
 
@@ -100,7 +101,7 @@ module Guard
 
         stderr = OCUnit::Formatter.new(STDERR, options[:verbose])
         command = ''
-        command << otest_environment_variables
+        command << otest_environment_variables(options)
         command << otest_command(test_suites, options[:test_bundle])
 
         status = Open4.spawn(command, :stderr => stderr, :status => true)
@@ -108,7 +109,7 @@ module Guard
         status.exitstatus
       end
 
-      def otest_environment_variables
+      def otest_environment_variables(options)
         environment_variables = {
           'DYLD_FRAMEWORK_PATH'           => "#{@built_products_dir}:#{File.join(@sdk_root, 'Applications/Xcode.app/Contents/Developer/Library/Frameworks')}",
           'DYLD_LIBRARY_PATH'             =>  @built_products_dir,
@@ -118,7 +119,14 @@ module Guard
           'IPHONE_SIMULATOR_ROOT'         => @sdk_root
           # 'CFFIXED_USER_HOME'             => File.expand_path('~/Library/Application Support/iPhone Simulator/')
         }
-        "export " + environment_variables.map {|key, value| "#{key}=#{value}"}.join(' ') + ';'
+
+        environment = "export "
+        joined = environment_variables.map do |key, value|
+          "#{key}=#{value}"
+        end
+        environment << joined.join(' ') + ' '
+        environment << options[:test_variables] unless options[:test_variables].to_s.empty?
+        environment << ';'
       end
 
       def otest_command(test_suites, test_bundle)
