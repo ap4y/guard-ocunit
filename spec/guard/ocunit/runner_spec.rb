@@ -230,6 +230,23 @@ describe Guard::OCUnit::Runner do
             end
           end
         end
+
+        describe ':clean' do
+          context ':clean => true' do
+            subject { described_class.new(:clean => true) }
+
+            it "makes clean build of the project" do
+              XcodeBuild.should_receive(:run).with(
+                "-sdk iphonesimulator6.0 " +
+                "-configuration Debug -alltargets clean build " +
+                "CONFIGURATION_BUILD_DIR=#{@build_path}",
+                anything()
+              ).and_return(-1)
+
+              subject.run(['test'])
+            end
+          end
+        end
       end
     end
   end

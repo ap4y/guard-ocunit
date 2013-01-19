@@ -16,14 +16,15 @@ module Guard
 
       def initialize(options = {})
         @options = {
-          :test_bundle  => nil,
-          :derived_data => nil,
-          :workspace    => nil,
-          :scheme       => nil,
-          :project      => nil,
-          :sdk          => 'iPhoneSimulator6.0',
-          :verbose      => false,
-          :notification => true
+          :test_bundle      => nil,
+          :derived_data     => nil,
+          :workspace        => nil,
+          :scheme           => nil,
+          :project          => nil,
+          :sdk              => 'iPhoneSimulator6.0',
+          :verbose          => false,
+          :notification     => true,
+          :clean            => false,
         }.merge(options)
       end
 
@@ -55,6 +56,7 @@ module Guard
         arguments << "-sdk #{options[:sdk].downcase}"
         arguments << "-configuration Debug"
         arguments << "-alltargets" if options[:workspace].to_s.empty?
+        arguments << "clean" if options[:clean]
         arguments << "build"
         arguments << "CONFIGURATION_BUILD_DIR=#{@built_products_dir}"
 

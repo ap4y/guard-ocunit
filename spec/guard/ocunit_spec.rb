@@ -211,7 +211,7 @@ describe Guard::OCUnit do
 
         runner.should_receive(:run).with(['./a_test.m:1', './a_test.m:7']) { true }
         runner.should_receive(:run).with(['./a_test.m', './b_test']) { true }
-        runner.should_receive(:run).with(['All'], :message => "Running all tests") { true }
+        runner.should_receive(:run).with(['All'], :message => "Running all tests", :clean => true) { true }
 
         @subject.run_on_changes(['./a_test.m','./b_test'])
       end

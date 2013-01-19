@@ -32,7 +32,9 @@ module Guard
     end
 
     def run_all
-      passed = @runner.run(['All'], @options[:run_all].merge(:message => 'Running all tests'))
+      options = @options[:run_all].merge(:message => 'Running all tests',
+                                         :clean   => true)
+      passed = @runner.run(['All'], options)
 
       unless @last_failed = !passed
         @failed_paths = []
