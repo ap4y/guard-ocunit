@@ -68,8 +68,8 @@ end
 :notification => false       # display notification after the tests are done running, default: true
 :all_after_pass => false     # run all tests after changed tests pass, default: true
 :all_on_start => false       # run all tests at startup, default: true
-:keep_failed => false        # keep failed tests until they pass, default: true
-:tests_paths => ["Tests"]    # specify an array of paths that contain test files
+:keep_failed  => false       # keep failed tests until they pass, default: true
+:tests_paths  => ["Tests"]   # specify an array of paths that contain test files
 :focus_on_failed => false    # focus on the first 10 failed tests first, rerun till they pass
 :clean        => false       # define all builds as clean. By default run all command doing clean build
 ```
