@@ -25,6 +25,7 @@ module Guard
           :verbose          => false,
           :notification     => true,
           :clean            => false,
+          :build_variables  => nil,
         }.merge(options)
       end
 
@@ -59,6 +60,7 @@ module Guard
         arguments << "clean" if options[:clean]
         arguments << "build"
         arguments << "CONFIGURATION_BUILD_DIR=#{@built_products_dir}"
+        arguments << options[:build_variables] unless options[:build_variables].to_s.empty?
 
         XcodeBuild.run(arguments.compact.join(' '), STDOUT)
       end

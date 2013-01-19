@@ -71,7 +71,8 @@ end
 :keep_failed  => false       # keep failed tests until they pass, default: true
 :tests_paths  => ["Tests"]   # specify an array of paths that contain test files
 :focus_on_failed => false    # focus on the first 10 failed tests first, rerun till they pass
-:clean        => false       # define all builds as clean. By default run all command doing clean build
+:clean        => false       # defines all builds as clean. By default run all command doing clean build
+:build_variables => ''       # passes provided parameters to the xcodebuild
 ```
 
 ## Credits

@@ -247,6 +247,24 @@ describe Guard::OCUnit::Runner do
             end
           end
         end
+
+        describe ':build_variables' do
+          context ":build_variables => 'TEST_HOST=build'" do
+            subject { described_class.new(:build_variables => 'TEST_HOST=build') }
+
+            it "makes clean build of the project" do
+              XcodeBuild.should_receive(:run).with(
+                "-sdk iphonesimulator6.0 " +
+                "-configuration Debug -alltargets build " +
+                "CONFIGURATION_BUILD_DIR=#{@build_path} " +
+                "TEST_HOST=build",
+                anything()
+              ).and_return(-1)
+
+              subject.run(['test'])
+            end
+          end
+        end
       end
     end
   end
