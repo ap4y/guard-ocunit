@@ -25,8 +25,7 @@ module Guard
           :verbose          => false,
           :notification     => true,
           :clean            => false,
-          :build_variables  => nil,
-          :test_variables   => nil
+          :build_variables  => nil
         }.merge(options)
       end
 

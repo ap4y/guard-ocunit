@@ -71,7 +71,6 @@ end
 :focus_on_failed => false    # focus on the first 10 failed tests first, rerun till they pass
 :clean        => false       # defines all builds as clean. By default run all command doing clean build
 :build_variables => ''       # passes provided parameters to the xcodebuild
-:test_variables  => ''       # passes provided parameters to the octool
 :derived_data => ''/tmp/tests/, # build into provided path, default: current folder
 :sdk          => '',            # link and test against provided device sdk, default: 'iphonesimulator'
 ```

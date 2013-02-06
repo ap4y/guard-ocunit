@@ -266,22 +266,6 @@ describe Guard::OCUnit::Runner do
           end
         end
 
-        describe ':test_variables' do
-          context ":test_variables => 'TEST_HOST=build'" do
-            subject { described_class.new(:test_variables => 'TEST_HOST=build') }
-
-            it "makes clean build of the project" do
-              XcodeBuild.should_receive(:run).and_return(0)
-              Open4.should_receive(:spawn).with(
-                /TEST_HOST=build;/,
-                anything()
-              ).and_return(@mock_status)
-
-              subject.run(['test'], :test_bundle => 'SampleAppTests')
-            end
-          end
-        end
-
       end
     end
   end
