@@ -65,19 +65,16 @@ module Guard
         XcodeBuild.run(arguments.compact.join(' '), STDOUT)
       end
 
-      def otest_path
-        File.join(@sdk_root, 'Developer/usr/bin/otest')
-      end
-
     private
 
       def path_variables(options)
         project_folder      = options[:project] && File.dirname(options[:project])
-        @source_root        = project_folder || File.expand_path('..', __FILE__)
-        @derived_data       = options[:derived_data] || @source_root
+        @derived_data       = project_folder || options[:derived_data]
         @built_products_dir = File.join(@derived_data, 'build/')
-        @dev_root           = '/Applications/Xcode.app/Contents/Developer'
-        @sdk_root           = File.join(@dev_root, "Platforms/iPhoneSimulator.platform/Developer/SDKs/#{options[:sdk]}.sdk")
+
+        scheme_name         = options[:scheme]
+        @test_bundle_path   = File.join(@built_products_dir, "#{options[:test_bundle]}.octest")
+        @test_host          = File.join(@built_products_dir, "#{scheme_name}.app", "#{scheme_name}")
       end
 
       def run_via_shell(paths, options)
@@ -98,41 +95,35 @@ module Guard
       def run_otest(paths, options)
         test_suites = paths.uniq.join(',')
 
-        stderr = OCUnit::Formatter.new(STDERR, options[:verbose])
-        command = ''
-        command << otest_environment_variables(options)
-        command << otest_command(test_suites, options[:test_bundle])
+        stderr  = OCUnit::Formatter.new(STDERR, options[:verbose])
+        command = otest_command(test_suites)
 
         status = Open4.spawn(command, :stderr => stderr, :status => true)
         stderr.dump_summary(options[:notification])
         status.exitstatus
       end
 
-      def otest_environment_variables(options)
+      def otest_environment_variables()
         environment_variables = {
-          'DYLD_FRAMEWORK_PATH'           => "#{@built_products_dir}:#{File.join(@sdk_root, 'Applications/Xcode.app/Contents/Developer/Library/Frameworks')}",
-          'DYLD_LIBRARY_PATH'             =>  @built_products_dir,
-          'DYLD_NEW_LOCAL_SHARED_REGIONS' => 'YES',
-          'DYLD_NO_FIX_PREBINDING'        => 'YES',
-          'DYLD_ROOT_PATH'                => @sdk_root,
-          'IPHONE_SIMULATOR_ROOT'         => @sdk_root
-          # 'CFFIXED_USER_HOME'             => File.expand_path('~/Library/Application Support/iPhone Simulator/')
+          'DYLD_INSERT_LIBRARIES' => "/../../Library/PrivateFrameworks/IDEBundleInjection.framework/IDEBundleInjection",
+          'XCInjectBundle'        => @test_bundle_path,
+          'XCInjectBundleInto'    => @test_host
         }
 
-        environment = "export "
-        joined = environment_variables.map do |key, value|
-          "#{key}=#{value}"
+        mapped = environment_variables.map do |key, value|
+          "--setenv #{key}=\"#{value}\""
         end
-        environment << joined.join(' ') + ' '
-        environment << options[:test_variables] unless options[:test_variables].to_s.empty?
-        environment << ';'
+        mapped.join(' ')
       end
 
-      def otest_command(test_suites, test_bundle)
+      def otest_command(test_suites)
         command = []
-        command << "#{otest_path}"
+        command << 'ios-sim launch'
+        command << "\"#{File.dirname(@test_host)}\""
+        command << "#{otest_environment_variables()}"
+        command << '--args'
         command << "-SenTest #{File.basename(test_suites, '.m')}"
-        command << "#{File.join(@built_products_dir, "#{test_bundle}.octest")}"
+        command << "#@test_bundle_path"
         command.compact.join(' ')
       end
     end

@@ -32,7 +32,7 @@ describe Guard::OCUnit::Runner do
       it 'runs with Open4' do
         XcodeBuild.should_receive(:run).and_return(0)
         Open4.should_receive(:spawn).with(
-          /otest -SenTest test #{@build_path}SampleAppTests.octest/,
+          /-SenTest test #{@build_path}SampleAppTests.octest/,
           anything()
         ).and_return(@mock_status)
 
@@ -108,7 +108,7 @@ describe Guard::OCUnit::Runner do
             it "runs provided test bundle" do
               XcodeBuild.should_receive(:run).and_return(0)
               Open4.should_receive(:spawn).with(
-                /otest -SenTest test #{@build_path}SampleAppTests.octest/,
+                /-SenTest test #{@build_path}SampleAppTests.octest/,
                 anything()
               ).and_return(@mock_status)
 
@@ -135,7 +135,7 @@ describe Guard::OCUnit::Runner do
             it "runs test bundle from the provided folder" do
               XcodeBuild.should_receive(:run).and_return(0)
               Open4.should_receive(:spawn).with(
-                %r{otest -SenTest test /tmp/sample/build/SampleAppTests.octest},
+                %r{-SenTest test /tmp/sample/build/SampleAppTests.octest},
                 anything()
               ).and_return(@mock_status)
 
@@ -181,7 +181,7 @@ describe Guard::OCUnit::Runner do
             it "runs test from the project folder" do
               XcodeBuild.should_receive(:run).and_return(0)
               Open4.should_receive(:spawn).with(
-                %r{otest -SenTest test ~/Documents/build/SampleAppTests.octest},
+                %r{-SenTest test ~/Documents/build/SampleAppTests.octest},
                 anything()
               ).and_return(@mock_status)
 
@@ -205,15 +205,6 @@ describe Guard::OCUnit::Runner do
               subject.run(['test'])
             end
 
-            it 'links against provided sdk' do
-              XcodeBuild.should_receive(:run).and_return(0)
-              Open4.should_receive(:spawn).with(
-                /otest -SenTest test #{@build_path}SampleAppTests.octest/,
-                anything()
-              ).and_return(@mock_status)
-
-              subject.run(['test'], :test_bundle => 'SampleAppTests')
-            end
           end
         end
 
