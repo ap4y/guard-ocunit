@@ -20,7 +20,7 @@ describe Guard::OCUnit::Runner do
 
       it 'compiles with XcodeBuild' do
         XcodeBuild.should_receive(:run).with(
-          "-sdk iphonesimulator6.0 " +
+          "-sdk iphonesimulator " +
           "-configuration Debug -alltargets build " +
           "CONFIGURATION_BUILD_DIR=#{@build_path}",
           anything()
@@ -123,7 +123,7 @@ describe Guard::OCUnit::Runner do
 
             it "builds to the provided folder" do
               XcodeBuild.should_receive(:run).with(
-                "-sdk iphonesimulator6.0 " +
+                "-sdk iphonesimulator " +
                 "-configuration Debug -alltargets build " +
                 "CONFIGURATION_BUILD_DIR=/tmp/sample/build/",
                 anything()
@@ -151,7 +151,7 @@ describe Guard::OCUnit::Runner do
             it "builds scheme in workspace and do not include -alltargets" do
               XcodeBuild.should_receive(:run).with(
                 "-workspace testWorkspace -scheme testScheme " +
-                "-sdk iphonesimulator6.0 " +
+                "-sdk iphonesimulator " +
                 "-configuration Debug build " +
                 "CONFIGURATION_BUILD_DIR=#{@build_path}",
                 anything()
@@ -169,7 +169,7 @@ describe Guard::OCUnit::Runner do
             it "builds project into it's own folder" do
               XcodeBuild.should_receive(:run).with(
                 "-project ~/Documents/SampleApp.xcodeproj " +
-                "-sdk iphonesimulator6.0 " +
+                "-sdk iphonesimulator " +
                 "-configuration Debug -alltargets build " +
                 "CONFIGURATION_BUILD_DIR=~/Documents/build/",
                 anything()
@@ -237,7 +237,7 @@ describe Guard::OCUnit::Runner do
 
             it "makes clean build of the project" do
               XcodeBuild.should_receive(:run).with(
-                "-sdk iphonesimulator6.0 " +
+                "-sdk iphonesimulator " +
                 "-configuration Debug -alltargets clean build " +
                 "CONFIGURATION_BUILD_DIR=#{@build_path}",
                 anything()
@@ -254,7 +254,7 @@ describe Guard::OCUnit::Runner do
 
             it "makes clean build of the project" do
               XcodeBuild.should_receive(:run).with(
-                "-sdk iphonesimulator6.0 " +
+                "-sdk iphonesimulator " +
                 "-configuration Debug -alltargets build " +
                 "CONFIGURATION_BUILD_DIR=#{@build_path} " +
                 "TEST_HOST=build",

@@ -62,7 +62,6 @@ end
 :workspace    => nil,        # build provided workspace, default: nil, use with :scheme
 :scheme       => nil,        # build provided scheme, default: nil, use with :workspace
 :project      => nil,        # path to the project to test, defaults to current folder
-:sdk          => '',         # link and test against provided sdk, default: 'iPhoneSimulator6.0'
 :verbose      => false       # dump all tests information in console
 :notification => false       # display notification after the tests are done running, default: true
 :all_after_pass => false     # run all tests after changed tests pass, default: true
@@ -74,6 +73,7 @@ end
 :build_variables => ''       # passes provided parameters to the xcodebuild
 :test_variables  => ''       # passes provided parameters to the octool
 :derived_data => ''/tmp/tests/, # build into provided path, default: current folder
+:sdk          => '',            # link and test against provided device sdk, default: 'iphonesimulator'
 ```
 
 ## Credits

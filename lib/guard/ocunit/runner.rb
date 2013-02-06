@@ -21,7 +21,7 @@ module Guard
           :workspace        => nil,
           :scheme           => nil,
           :project          => nil,
-          :sdk              => 'iPhoneSimulator6.0',
+          :sdk              => 'iphonesimulator',
           :verbose          => false,
           :notification     => true,
           :clean            => false,
