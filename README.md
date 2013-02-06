@@ -58,21 +58,21 @@ end
 ### List of available options:
 
 ``` ruby
-:test_bundle  => '',         # test ocunit bundle with provided name, mandatory parameter
-:workspace    => nil,        # build provided workspace, default: nil, use with :scheme
-:scheme       => nil,        # build provided scheme, default: nil, use with :workspace
-:project      => nil,        # path to the project to test, defaults to current folder
-:verbose      => false       # dump all tests information in console
-:notification => false       # display notification after the tests are done running, default: true
-:all_after_pass => false     # run all tests after changed tests pass, default: true
-:all_on_start => false       # run all tests at startup, default: true
-:keep_failed  => false       # keep failed tests until they pass, default: true
-:tests_paths  => ["Tests"]   # specify an array of paths that contain test files
-:focus_on_failed => false    # focus on the first 10 failed tests first, rerun till they pass
-:clean        => false       # defines all builds as clean. By default run all command doing clean build
-:build_variables => ''       # passes provided parameters to the xcodebuild
+:test_bundle  => '',            # test ocunit bundle with provided name, mandatory parameter
 :derived_data => ''/tmp/tests/, # build into provided path, default: current folder
+:workspace    => nil,           # build provided workspace, default: nil, use with :scheme
+:scheme       => nil,           # build provided scheme, default: nil, use with :workspace
+:project      => nil,           # path to the project to test, defaults to current folder
 :sdk          => '',            # link and test against provided device sdk, default: 'iphonesimulator'
+:verbose      => false          # dump all tests information in console
+:notification => false          # display notification after the tests are done running, default: true
+:all_after_pass => false        # run all tests after changed tests pass, default: true
+:all_on_start => false          # run all tests at startup, default: true
+:keep_failed  => false          # keep failed tests until they pass, default: true
+:tests_paths  => ["Tests"]      # specify an array of paths that contain test files
+:focus_on_failed => false       # focus on the first 10 failed tests first, rerun till they pass
+:clean        => false          # defines all builds as clean. By default run all command doing clean build
+:build_variables => ''          # passes provided parameters to the xcodebuild
 ```
 
 ## Credits

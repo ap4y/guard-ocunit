@@ -40,7 +40,7 @@ module Guard
       end
 
       def xcodebuild(options = {})
-        options       = @options.merge(options)
+        options = @options.merge(options)
         path_variables(options)
 
         # REVIEW: currently not all error messages are going to the output via
