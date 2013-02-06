@@ -59,7 +59,6 @@ end
 
 ``` ruby
 :test_bundle  => '',         # test ocunit bundle with provided name, mandatory parameter
-:derived_data => nil,        # build into provided path, default: current folder
 :workspace    => nil,        # build provided workspace, default: nil, use with :scheme
 :scheme       => nil,        # build provided scheme, default: nil, use with :workspace
 :project      => nil,        # path to the project to test, defaults to current folder
@@ -74,6 +73,7 @@ end
 :clean        => false       # defines all builds as clean. By default run all command doing clean build
 :build_variables => ''       # passes provided parameters to the xcodebuild
 :test_variables  => ''       # passes provided parameters to the octool
+:derived_data => ''/tmp/tests/, # build into provided path, default: current folder
 ```
 
 ## Credits

@@ -17,7 +17,7 @@ module Guard
       def initialize(options = {})
         @options = {
           :test_bundle      => nil,
-          :derived_data     => nil,
+          :derived_data     => '/tmp/tests/',
           :workspace        => nil,
           :scheme           => nil,
           :project          => nil,

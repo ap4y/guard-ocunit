@@ -12,7 +12,7 @@ describe Guard::OCUnit::Runner do
 
     context 'in project folder' do
       before do
-        @build_path = @lib_path.join("guard/ocunit/build/")
+        @build_path = '/tmp/tests/build/'
 
         @mock_status = Object.new
         @mock_status.stub(:exitstatus).and_return(1)
