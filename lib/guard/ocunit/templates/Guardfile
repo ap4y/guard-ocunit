@@ -1,9 +1,14 @@
 guard :ocunit,
-      :derived_data  => '/tmp/tests',
+      :test_paths    => ['SampleAppTests'],
       :workspace     => 'SampleApp.xcworkspace',
       :scheme        => 'SampleApp',
       :test_bundle   => 'SampleAppTests' do
 
-  watch(%r{^SampleAppTests/.+Tests\.m})
-  watch(%r{^SampleApp/Models/(.+)\.[m,h]$}) { |m| "SampleAppTests/#{m[1]}Tests.m" }
+  watch(%r{^SampleAppTests/Models/.+Tests\.m})
+  watch(%r{^SampleAppTests/Helpers/.+Tests\.m})
+  watch(%r{^SampleAppTests/ViewControllers/.+Tests\.m})
+
+  watch(%r{^SampleApp/Models/(.+)\.[m,h]$})           { |m| "SampleAppTests/Models/#{m[1]}Tests.m" }
+  watch(%r{^SampleApp/Helpers/(.+)\.[m,h]$})          { |m| "SampleAppTests/Helpers/#{m[1]}Tests.m" }
+  watch(%r{^SampleApp/ViewControllers/(.+)\.[m,h]$})  { |m| "SampleAppTests/ViewControllers/#{m[1]}Tests.m" }
 end
