@@ -73,6 +73,7 @@ end
 :focus_on_failed => false       # focus on the first 10 failed tests first, rerun till they pass
 :clean        => false          # defines all builds as clean. By default run all command doing clean build
 :build_variables => ''          # passes provided parameters to the xcodebuild
+:ios_sim_opts => ''             # passes provided options to the ios-sim
 ```
 
 ## Credits

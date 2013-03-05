@@ -243,7 +243,7 @@ describe Guard::OCUnit::Runner do
           context ":build_variables => 'TEST_HOST=build'" do
             subject { described_class.new(:build_variables => 'TEST_HOST=build') }
 
-            it "makes clean build of the project" do
+            it "makes clean build of the project with specified variables" do
               XcodeBuild.should_receive(:run).with(
                 "-sdk iphonesimulator " +
                 "-configuration Debug -alltargets build " +
@@ -253,6 +253,22 @@ describe Guard::OCUnit::Runner do
               ).and_return(-1)
 
               subject.run(['test'])
+            end
+          end
+        end
+
+        describe ':ios_sim_opts' do
+          context ":ios_sim_opts => '--family=ipad'" do
+            subject { described_class.new(:ios_sim_opts => '--family=ipad') }
+
+            it "runs tests with specified options" do
+              XcodeBuild.should_receive(:run).and_return(0)
+              Open4.should_receive(:spawn).with(
+                %r{--family=ipad --args -SenTest test #{@build_path}SampleAppTests.octest},
+                anything()
+              ).and_return(@mock_status)
+
+              subject.run(['test'], :test_bundle => 'SampleAppTests')
             end
           end
         end

@@ -25,7 +25,8 @@ module Guard
           :verbose          => false,
           :notification     => true,
           :clean            => false,
-          :build_variables  => nil
+          :build_variables  => nil,
+          :ios_sim_opts     => nil
         }.merge(options)
       end
 
@@ -121,6 +122,7 @@ module Guard
         command << 'ios-sim launch'
         command << "\"#{File.dirname(@test_host)}\""
         command << "#{otest_environment_variables()}"
+        command << options[:ios_sim_opts] unless options[:ios_sim_opts].to_s.empty?
         command << '--args'
         command << "-SenTest #{File.basename(test_suites, '.m')}"
         command << "#@test_bundle_path"
