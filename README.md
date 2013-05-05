@@ -1,6 +1,6 @@
 # Guard::OCUnit [![Build Status](https://secure.travis-ci.org/ap4y/guard-ocunit.png?branch=master)](http://travis-ci.org/ap4y/guard-ocunit)
 
-OCUnit guard allows to automatically launch tests when files are modified.
+OCUnit guard allows to automatically launch `OCUnit` tests when files source files are modified.
 
 * Compatible with XCode 4.x
 * Tested with XCode 4.5.
@@ -9,17 +9,31 @@ OCUnit guard allows to automatically launch tests when files are modified.
 
 Please be sure to have [Guard](https://github.com/guard/guard) and [ios-sim](https://github.com/phonegap/ios-sim) installed before continue. `guard-ocunit` uses `ios-sim` for running `application` tests from command line, for more info refer to the [SO](http://stackoverflow.com/questions/12557935/xcode-4-5-command-line-unit-testing) question.
 
-Install the gem:
+* Install the gem:
 
 ```
 $ gem install guard-ocunit
 ```
 
-Add guard definition to your Guardfile by running this command:
+* Add guard definition to your Guardfile by running this command:
 
 ```
 $ guard init ocunit
 ```
+
+* Change `Run Script` phase for test target to:
+
+```bash
+if [ "$RUN_UNIT_TEST_WITH_IOS_SIM" = "YES" ]; then
+    test_bundle_path="$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.$WRAPPER_EXTENSION"
+    ios-sim launch "$(dirname "$TEST_HOST")" --setenv DYLD_INSERT_LIBRARIES=/../../Library/PrivateFrameworks/IDEBundleInjection.framework/IDEBundleInjection --setenv XCInjectBundle="$test_bundle_path" --setenv XCInjectBundleInto="$TEST_HOST" --args -SenTest All "$test_bundle_path"
+    echo "Finished running tests with ios-sim"
+else
+    "${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests"
+fi
+```
+
+* Enable `Run` in the `Build` section of your test bundle’s scheme. (See http://www.raingrove.com/2012/03/28/running-ocunit-and-specta-tests-from-command-line.html).
 
 ## Usage
 
