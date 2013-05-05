@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ['lod@pisem.net']
   s.homepage    = 'https://github.com/ap4y/guard-ocunit'
   s.summary     = 'Guard gem for OCUnit'
-  s.description = 'Guard::OCUnit automatically runs your tests.'
+  s.description = 'Guard::OCUnit automatically runs your OCUnit(SenTest) tests'
 
   s.required_rubygems_version = '>= 1.3.6'
 
