@@ -13,6 +13,30 @@ describe Guard::OCUnit::Formatter do
       subject << "Test Case '-[testsPublication test0_shouldFetchPublications]' failed (0.155 seconds)."
       subject.failed.should == 1
     end
+
+    context 'when failure has 1 error' do
+      it 'accumulates regular failure message' do
+        subject << "#{Dir.pwd}/Foo/BarTests.m:68: error: -[BarTests testBaz] : '1' should be equal to '0':"
+        subject << "Test Case '-[BarTests testBaz]' failed (0.116 seconds)."
+        subject.error_messages.should eq [ "\n1. -[BarTests testBaz] \n    \e[31m '1' should be equal to '0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n" ]
+      end
+    end
+
+    context 'when failure has multiple errors' do
+      it 'accumulates nested failure message' do
+        subject << "#{Dir.pwd}/Foo/BarTests.m:68: error: -[BarTests testBaz] : '1' should be equal to '0':\n#{Dir.pwd}/Foo/BarTests.m:69: error: -[BarTests testBaz] : '3' should be equal to '2':"
+        subject << "Test Case '-[BarTests testBaz]' failed (0.116 seconds)."
+        subject.error_messages.should eq [ "\n1. -[BarTests testBaz] \n    \e[31m '1' should be equal to '0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n\n    \e[31m '3' should be equal to '2'\e[0m\n    \e[32m./Foo/BarTests.m:69\e[0m\n" ]
+      end
+    end
+
+    context 'when failure has miltiline error' do
+      it 'accumulates multiline failure message' do
+        subject << "#{Dir.pwd}/Foo/BarTests.m:68: error: -[BarTests testBaz] : '1'\nshould be equal to\n'0':"
+        subject << "Test Case '-[BarTests testBaz]' failed (0.116 seconds)."
+        subject.error_messages.should eq [ "\n1. -[BarTests testBaz] \n    \e[31m '1'\nshould be equal to\n'0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n" ]
+      end
+    end
   end
 
   describe '#dump_summary' do
@@ -24,11 +48,8 @@ describe Guard::OCUnit::Formatter do
       subject.dump_summary
     end
 
-    it 'notifies with current state' do
-      subject.should_receive(:notify).with(
-        /0 examples, 0 failures\nin 0.000\d seconds/,
-        :success
-      )
+    it 'dumps error messages' do
+      subject.should_receive(:dump_error_messages)
       subject.dump_summary
     end
   end
@@ -94,5 +115,4 @@ describe Guard::OCUnit::Formatter do
       subject.notify('This is the guard ocunit message', :success)
     end
   end
-
 end
