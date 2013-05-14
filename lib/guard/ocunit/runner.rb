@@ -44,12 +44,9 @@ module Guard
         options = @options.merge(options)
         path_variables(options)
 
-        # REVIEW: currently not all error messages are going to the output via
-        #   formatter, decided to disable it
-
-        # formatter     = XcodeBuild::Formatters::ProgressFormatter.new
-        # reporter      = XcodeBuild::Reporter.new(formatter)
-        # output_buffer = XcodeBuild::OutputTranslator.new(reporter)
+        formatter     = XcodeBuild::Formatters::ProgressFormatter.new
+        reporter      = XcodeBuild::Reporter.new(formatter)
+        output_buffer = XcodeBuild::OutputTranslator.new(reporter)
 
         arguments = []
         arguments << "-workspace #{options[:workspace]}" unless options[:workspace].to_s.empty?
@@ -63,7 +60,7 @@ module Guard
         arguments << "CONFIGURATION_BUILD_DIR=#{@built_products_dir}"
         arguments << options[:build_variables] unless options[:build_variables].to_s.empty?
 
-        XcodeBuild.run(arguments.compact.join(' '), STDOUT)
+        XcodeBuild.run(arguments.compact.join(' '), output_buffer)
       end
 
     private
