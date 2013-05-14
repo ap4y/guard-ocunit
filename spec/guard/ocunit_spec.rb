@@ -100,6 +100,11 @@ describe Guard::OCUnit do
 
   describe '#reload' do
     it_should_behave_like 'clear failed paths'
+
+    it 'runs all tests with :clean option' do
+      runner.should_receive(:run).with(['All'], :message => "Cleaning and running all tests", :clean => true) { true }
+      subject.reload
+    end
   end
 
   describe '#run_on_changes' do
@@ -211,7 +216,7 @@ describe Guard::OCUnit do
 
         runner.should_receive(:run).with(['./a_test.m:1', './a_test.m:7']) { true }
         runner.should_receive(:run).with(['./a_test.m', './b_test']) { true }
-        runner.should_receive(:run).with(['All'], :message => "Running all tests", :clean => true) { true }
+        runner.should_receive(:run).with(['All'], :message => "Running all tests", :clean => false) { true }
 
         @subject.run_on_changes(['./a_test.m','./b_test'])
       end

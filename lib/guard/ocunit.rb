@@ -33,7 +33,7 @@ module Guard
 
     def run_all
       options = @options[:run_all].merge(:message => 'Running all tests',
-                                         :clean   => true)
+                                         :clean   => false)
       passed = @runner.run(['All'], options)
 
       unless @last_failed = !passed
@@ -45,6 +45,9 @@ module Guard
 
     def reload
       @failed_paths = []
+      options = @options[:run_all].merge(:message => 'Cleaning and running all tests',
+                                         :clean   => true)
+      @runner.run(['All'], options)
     end
 
     def run_on_changes(paths)
