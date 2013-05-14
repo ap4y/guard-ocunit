@@ -1,11 +1,6 @@
 require 'guard/ocunit'
 require 'colored'
 
-if RUBY_VERSION =~ /1.9/ #bug with output parsing
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
-end
-
 class Guard::OCUnit::Formatter < Array
   attr_reader :passed, :failed, :start_time
 
@@ -25,7 +20,7 @@ class Guard::OCUnit::Formatter < Array
       @failed += 1
       line.red
     when /(error|otest)/
-      line.red
+      line.split(':')[3..-1].join(' ').yellow
     else
       @verbose ? line : ''
     end
