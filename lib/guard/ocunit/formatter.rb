@@ -28,7 +28,7 @@ class Guard::OCUnit::Formatter < Array
     when /(started|Executed|finished)/
       @verbose ? line : ''
     when /^#{Date.today}/
-      @verbose ? line.yellow : ''
+      line
     else
       @current_failure << line unless line.strip.empty?
       @verbose ? line : ''
