@@ -120,7 +120,7 @@ private
 
   def failure_case(failure)
     components = failure.split(':')
-    case_name = "\n#{@error_messages.size + 1}."
+    case_name = "\n  #{@error_messages.size + 1}."
     case_name << components[3]
   end
 

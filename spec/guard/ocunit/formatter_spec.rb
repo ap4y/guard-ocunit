@@ -18,7 +18,7 @@ describe Guard::OCUnit::Formatter do
       it 'accumulates regular failure message' do
         subject << "#{Dir.pwd}/Foo/BarTests.m:68: error: -[BarTests testBaz] : '1' should be equal to '0':"
         subject << "Test Case '-[BarTests testBaz]' failed (0.116 seconds)."
-        subject.error_messages.should eq [ "\n1. -[BarTests testBaz] \n    \e[31m '1' should be equal to '0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n" ]
+        subject.error_messages.should eq [ "\n  1. -[BarTests testBaz] \n    \e[31m '1' should be equal to '0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n" ]
       end
     end
 
@@ -26,7 +26,7 @@ describe Guard::OCUnit::Formatter do
       it 'accumulates nested failure message' do
         subject << "#{Dir.pwd}/Foo/BarTests.m:68: error: -[BarTests testBaz] : '1' should be equal to '0':\n#{Dir.pwd}/Foo/BarTests.m:69: error: -[BarTests testBaz] : '3' should be equal to '2':"
         subject << "Test Case '-[BarTests testBaz]' failed (0.116 seconds)."
-        subject.error_messages.should eq [ "\n1. -[BarTests testBaz] \n    \e[31m '1' should be equal to '0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n\n    \e[31m '3' should be equal to '2'\e[0m\n    \e[32m./Foo/BarTests.m:69\e[0m\n" ]
+        subject.error_messages.should eq [ "\n  1. -[BarTests testBaz] \n    \e[31m '1' should be equal to '0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n\n    \e[31m '3' should be equal to '2'\e[0m\n    \e[32m./Foo/BarTests.m:69\e[0m\n" ]
       end
     end
 
@@ -34,7 +34,7 @@ describe Guard::OCUnit::Formatter do
       it 'accumulates multiline failure message' do
         subject << "#{Dir.pwd}/Foo/BarTests.m:68: error: -[BarTests testBaz] : '1'\nshould be equal to\n'0':"
         subject << "Test Case '-[BarTests testBaz]' failed (0.116 seconds)."
-        subject.error_messages.should eq [ "\n1. -[BarTests testBaz] \n    \e[31m '1'\nshould be equal to\n'0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n" ]
+        subject.error_messages.should eq [ "\n  1. -[BarTests testBaz] \n    \e[31m '1'\nshould be equal to\n'0'\e[0m\n    \e[32m./Foo/BarTests.m:68\e[0m\n" ]
       end
     end
   end
