@@ -31,7 +31,7 @@ class Guard::OCUnit::Formatter < Array
       line
     else
       @current_failure << line unless line.strip.empty?
-      @verbose ? line : ''
+      @verbose ? line.yellow : ''
     end
     self
   end
