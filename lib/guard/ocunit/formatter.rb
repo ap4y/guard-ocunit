@@ -48,9 +48,10 @@ class Guard::OCUnit::Formatter < Array
   end
 
   def dump_error_messages
+    puts "\n\n"
     return if @error_messages.empty?
 
-    puts "\n\nFailures:\n"
+    puts "Failures:\n"
     puts @error_messages.join + "\n"
   end
 
