@@ -9,17 +9,19 @@ OCUnit guard allows to automatically launch tests when files are modified.
 
 Please be sure to have [Guard](https://github.com/guard/guard) and [ios-sim](https://github.com/phonegap/ios-sim) installed before continue. `guard-ocunit` uses `ios-sim` for running `application` tests from command line, for more info refer to the [SO](http://stackoverflow.com/questions/12557935/xcode-4-5-command-line-unit-testing) question.
 
-Install the gem:
+* Install the gem:
 
-```
+```bash
 $ gem install guard-ocunit
 ```
 
-Add guard definition to your Guardfile by running this command:
+* Add guard definition to your Guardfile by running this command:
 
-```
+```bash
 $ guard init ocunit
 ```
+
+* Enable `Run` in the `Build` section of your test bundle’s scheme.
 
 ## Usage
 
