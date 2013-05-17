@@ -17,7 +17,7 @@ module Guard
       def initialize(options = {})
         @options = {
           :test_bundle      => nil,
-          :derived_data     => '/tmp/tests/',
+          :derived_data     => nil,
           :workspace        => nil,
           :scheme           => nil,
           :project          => nil,
@@ -42,11 +42,13 @@ module Guard
 
       def xcodebuild(options = {})
         options = @options.merge(options)
-        path_variables(options)
+        update_build_path(nil, options)
 
         formatter     = XcodeBuild::Formatters::ProgressFormatter.new
         reporter      = XcodeBuild::Reporter.new(formatter)
         output_buffer = XcodeBuild::OutputTranslator.new(reporter)
+        path_handler  = BuildPathHandler.new
+        reporter.direct_raw_output_to = path_handler
 
         arguments = []
         arguments << "-workspace #{options[:workspace]}" unless options[:workspace].to_s.empty?
@@ -57,18 +59,21 @@ module Guard
         arguments << "-alltargets" if options[:workspace].to_s.empty?
         arguments << "clean" if options[:clean]
         arguments << "build"
-        arguments << "CONFIGURATION_BUILD_DIR=#{@built_products_dir}"
+        arguments << "CONFIGURATION_BUILD_DIR=#{@built_products_dir}" if @derived_data
         arguments << options[:build_variables] unless options[:build_variables].to_s.empty?
 
-        XcodeBuild.run(arguments.compact.join(' '), output_buffer)
+        build_result = XcodeBuild.run(arguments.compact.join(' '), output_buffer)
+        update_build_path(path_handler.build_path, options)
+        build_result
       end
 
     private
 
-      def path_variables(options)
+      def update_build_path(build_path, options)
         project_folder      = options[:project] && File.dirname(options[:project])
         @derived_data       = project_folder || options[:derived_data]
-        @built_products_dir = File.join(@derived_data, 'build/')
+        joined_path         = File.join(@derived_data, 'build/') if @derived_data
+        @built_products_dir = build_path || joined_path || '/tmp/tests/build/'
 
         scheme_name         = options[:scheme]
         @test_bundle_path   = File.join(@built_products_dir, "#{options[:test_bundle]}.octest")
@@ -126,5 +131,16 @@ module Guard
         command.compact.join(' ')
       end
     end
+
+    class BuildPathHandler
+
+        attr_reader :build_path
+
+        def <<(line)
+            match = line.match(/setenv BUILT_PRODUCTS_DIR (?<build_path>.*)/)
+            @build_path = match['build_path'] if match
+        end
+    end
+
   end
 end

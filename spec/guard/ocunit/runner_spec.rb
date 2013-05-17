@@ -21,8 +21,7 @@ describe Guard::OCUnit::Runner do
       it 'compiles with XcodeBuild' do
         XcodeBuild.should_receive(:run).with(
           "-sdk iphonesimulator " +
-          "-configuration Debug -alltargets build " +
-          "CONFIGURATION_BUILD_DIR=#{@build_path}",
+          "-configuration Debug -alltargets build",
           anything()
         ).and_return(-1)
 
@@ -152,8 +151,7 @@ describe Guard::OCUnit::Runner do
               XcodeBuild.should_receive(:run).with(
                 "-workspace testWorkspace -scheme testScheme " +
                 "-sdk iphonesimulator " +
-                "-configuration Debug build " +
-                "CONFIGURATION_BUILD_DIR=#{@build_path}",
+                "-configuration Debug build",
                 anything()
               ).and_return(-1)
 
@@ -197,8 +195,7 @@ describe Guard::OCUnit::Runner do
             it "builds with provided sdk" do
               XcodeBuild.should_receive(:run).with(
                 "-sdk iphonesimulator5.0 " +
-                "-configuration Debug -alltargets build " +
-                "CONFIGURATION_BUILD_DIR=#{@build_path}",
+                "-configuration Debug -alltargets build",
                 anything()
               ).and_return(-1)
 
@@ -229,8 +226,7 @@ describe Guard::OCUnit::Runner do
             it "makes clean build of the project" do
               XcodeBuild.should_receive(:run).with(
                 "-sdk iphonesimulator " +
-                "-configuration Debug -alltargets clean build " +
-                "CONFIGURATION_BUILD_DIR=#{@build_path}",
+                "-configuration Debug -alltargets clean build",
                 anything()
               ).and_return(-1)
 
@@ -247,7 +243,6 @@ describe Guard::OCUnit::Runner do
               XcodeBuild.should_receive(:run).with(
                 "-sdk iphonesimulator " +
                 "-configuration Debug -alltargets build " +
-                "CONFIGURATION_BUILD_DIR=#{@build_path} " +
                 "TEST_HOST=build",
                 anything()
               ).and_return(-1)
